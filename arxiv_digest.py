@@ -36,12 +36,12 @@ def get_item_html(arxiv_id, title, authors, comments):
     """
     return html
 
-def print_links(query, lenght, position):
+def print_links(query, position, length):
     """Print forward and backward links"""
     print("<div>")
     if position > 0:
-        print('<a href="?start=%d&amp;length=%d&amp;query=%s"">&lt;&lt; Later</a> ' % (max(0, position - 50), length, urllib.parse.quote(query)))
-    print('<a href="?start=%d&amp;length=%d&amp;query=%s">Earlier &gt;&gt;</a> ' % (position + 50, length, urllib.parse.quote(query)))
+        print('<a href="?start=%d&amp;length=%d&amp;query=%s"">&lt;&lt; Later</a> ' % (max(0, position - length), length, urllib.parse.quote(query)))
+    print('<a href="?start=%d&amp;length=%d&amp;query=%s">Earlier &gt;&gt;</a> ' % (position + length, length, urllib.parse.quote(query)))
     print("</div>")
 
 
@@ -58,7 +58,7 @@ else:
 start = int(args.get('start', 0))
 length = int(args.get('length', 50))
 query = args.get('query', QUERY)
-res = arxiv.query(query=query, max_results=50, sort_by="submittedDate", sort_order="descending", start=start)
+res = arxiv.query(query=query, max_results=length, sort_by="submittedDate", sort_order="descending", start=start)
 
 print(f"""
 <!DOCTYPE html>
